@@ -1,0 +1,223 @@
+{
+  "@@locale": "en",
+
+  "play": "Play",
+  "encyclopedia": "Encyclopedia",
+  "settings": "Settings",
+  "tagline": "Mix the elements of India",
+  "discovered": "Discovered",
+  "searchElements": "Search elements",
+  "hint": "Hint",
+  "clear": "Clear",
+  "revert": "Revert",
+  "close": "Close",
+  "learnMore": "Learn More",
+  "readMore": "Read More",
+  "watchVideo": "Watch a Video",
+  "newDiscovery": "New Discovery",
+  "continueLabel": "Continue",
+  "dragHint": "Drag two elements together",
+  "tapToAdd": "or tap an element below to add it",
+  "back": "Back",
+  "language": "Language",
+  "audio": "Audio",
+  "sound": "Sound effects",
+  "music": "Background music",
+  "reset": "Reset progress",
+  "resetConfirm": "Yes, reset everything",
+  "gotIt": "Take me there",
+  "about": "About MixRun",
+  "aboutBody": "A learning game that blends the elements of Indian nature, culture and science. Every discovery links to an article or video to learn more.",
+  "progress": "Progress",
+  "all": "All",
+  "madeFrom": "Made from",
+
+  "activeHintTitle": "Active Hint",
+  "discoverNext": "Discover this next",
+  "figureOutRecipe": "Combine elements on the canvas to discover it",
+  "getHint": "Get a hint",
+  "newHint": "New hint",
+  "noHint": "You have discovered everything reachable. Amazing!",
+  "watchAdForHint": "Watch a short video to the end to unlock a hint",
+  "adNotReady": "The video isn't ready yet. Please try again in a moment.",
+  "loadingAd": "Loading video…",
+  "activeHintsTitle": "Active hints",
+  "hintsLeftToday": "{count, plural, =0{No hints left today} one{1 hint left today} other{{count} hints left today}}",
+  "@hintsLeftToday": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "dailyHintLimitReached": "You've used all your hints for today. Come back tomorrow!",
+  "maxHintsReached": "You've reached the maximum number of active hints. Discover some before getting more.",
+  "alphabetical": "Alphabetical",
+  "recentlyDiscovered": "Recently discovered",
+
+  "makes": "Makes",
+  "combinations": "Combinations",
+  "categories": "Categories",
+  "addToWorkspace": "Add to workspace",
+  "discoveredStatus": "Discovered",
+  "notDiscovered": "Not yet discovered",
+  "noCombinations": "No combinations yet",
+
+  "undiscoveredCombosLine": "{withAnd, select, true{and } other{}}{count, plural, one{{count} undiscovered combination…} other{{count} undiscovered combinations…}}",
+  "@undiscoveredCombosLine": {
+    "placeholders": {
+      "count": { "type": "int" },
+      "withAnd": { "type": "String" }
+    }
+  },
+  "andMoreUndiscovered": "and {count} undiscovered…",
+  "@andMoreUndiscovered": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "stats": "Stats",
+  "discoveredItems": "Discovered items",
+  "basicItems": "Basic items",
+  "finalItems": "Final items",
+  "combosFound": "Combinations found",
+  "categoryCount": "categories",
+  "depletedItems": "Depleted items",
+  "depleted": "Depleted",
+  "finalLabel": "Final",
+
+  "account": "Account",
+  "signIn": "Sign in",
+  "signOut": "Sign out",
+  "createAccount": "Create account",
+  "email": "Email",
+  "password": "Password",
+  "continueWithGoogle": "Continue with Google",
+  "orDivider": "or",
+  "toggleToRegister": "New here? Create an account",
+  "toggleToSignIn": "Already have an account? Sign in",
+  "signInBlurb": "Sign in to save your progress to your account",
+  "accountUnavailable": "Sign-in isn't available yet,  the backend isn't configured.",
+
+  "exitGameTitle": "Exit game?",
+  "exitGameBody": "Do you want to exit the game?",
+  "exitGame": "Exit",
+  "stay": "Stay",
+
+  "journey": "Journey",
+  "yourJourney": "Your Journey",
+  "journeyCompletion": "Completion",
+  "journeyDiscoveries": "Discoveries",
+  "levelComplete": "Complete",
+  "locked": "Locked",
+
+  "introSkip": "Skip",
+  "introNext": "Next",
+  "introStart": "Start playing",
+
+  "introWelcomeTitle": "Welcome to MixRun",
+  "introWelcomeBody": "Start with four elements and combine them, two at a time, to uncover {count} things,  monuments, festivals, food, art and the people who shaped India.",
+  "@introWelcomeBody": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "introCombineTitle": "Drop one item on another",
+  "introCombineBody": "Drag an item out of the library, then drop it onto another item on the canvas. If the pair makes something, you've made a discovery.",
+  "introCombineHint": "Nothing breaks if a pair doesn't work,  the items just stay put, so try anything.",
+
+  "introLibraryTitle": "Your library",
+  "introLibraryBody": "Everything you discover joins the list on the right. Search it when it gets long, and drag from it onto the canvas.",
+  "introLibraryClear": "Clear tidies the canvas. Undo puts it straight back.",
+
+  "introSectionsTitle": "Getting around",
+  "introSectionsBody": "The bar along the bottom takes you everywhere.",
+  "introEncyclopediaBody": "Every item you've found, filterable by level, with a page for each one.",
+  "introJourneyBody": "Your path through the game. Appears once you unlock the second stop.",
+  "introStatsBody": "Discoveries, combinations, and how far along you are.",
+  "introSettingsBody": "Sound, music, your account,  and the FAQs.",
+  "introHintBody": "Stuck? A hint nudges you toward something you haven't found.",
+
+  "introReadyTitle": "You're all set",
+  "introReadyBody": "Progress saves by itself after every discovery. You can replay this walkthrough any time from Settings › Help.",
+
+  "help": "Help",
+  "howToPlay": "How to play",
+  "howToPlayBlurb": "Replay the walkthrough",
+  "faq": "FAQs",
+  "faqBlurb": "How the game works, answered",
+  "faqSubtitle": "Everything about playing MixRun",
+
+  "faqSectionBasics": "The basics",
+  "faqSectionPlaying": "Playing",
+  "faqSectionJourney": "The Journey",
+  "faqSectionProgress": "Your progress",
+
+  "faqWhatIsQ": "What is MixRun?",
+  "faqWhatIsA": "A discovery game. You start with a handful of raw elements and combine them two at a time to create new things,  each one a small piece of Indian heritage, from monuments and festivals to food, art and the people who shaped it.",
+
+  "faqStartQ": "What do I start with?",
+  "faqStartA": "Four elements: Earth, Water, Fire and Air. Everything else in the game is built from them.",
+
+  "faqHowCombineQ": "How do I combine items?",
+  "faqHowCombineA": "Drag an item from the library onto the canvas, then drop it on top of another. If the pair makes something, the new item appears and is added to your collection. If it doesn't, the items simply stay put,  nothing is lost, so experiment freely.",
+
+  "faqHowManyQ": "How many items are there?",
+  "faqHowManyA": "{count} in total, spread across {levels} stops on the Journey.",
+  "@faqHowManyA": {
+    "placeholders": {
+      "count": { "type": "int" },
+      "levels": { "type": "int" }
+    }
+  },
+
+  "faqPairQ": "Can a pair make more than one thing?",
+  "faqPairA": "No. Each pair has a single result, so re-mixing two items you have already combined just makes the same thing again.",
+
+  "faqCantMakeQ": "Why won't two items combine?",
+  "faqCantMakeA": "Either that pair has no recipe, or the item it would make belongs to a Journey level you haven't unlocked yet. Keep exploring the level you're on and it will open up.",
+
+  "faqBasicQ": "What are \"basic\" items?",
+  "faqBasicA": "The classical building blocks,  the four starters plus raw forces like Heat, Life and Motion that come straight from them. You can filter the Encyclopedia down to just these.",
+
+  "faqDepletedQ": "What does \"Depleted\" mean?",
+  "faqDepletedA": "You have already found every combination that uses that item. It stays in your library, but it has nothing new left to give.",
+
+  "faqFinalQ": "What does \"Final\" mean?",
+  "faqFinalA": "That item is never used as an ingredient in any recipe. It sits at the end of a chain,  a destination rather than a stepping stone.",
+
+  "faqJourneyQ": "What is the Journey?",
+  "faqJourneyA": "The path through the game. It opens with the Base Level and continues through five themed stops: States & UTs, History & Sites, Culture & Cuisine, Dance & Local Art, and Heroes & Kings.",
+
+  "faqUnlockQ": "How do I unlock the next level?",
+  "faqUnlockA": "Discover {percent}% of the level you are on. The Journey map shows how far along each stop you are.",
+  "@faqUnlockA": {
+    "placeholders": {
+      "percent": { "type": "int" }
+    }
+  },
+
+  "faqHintsQ": "How do hints work?",
+  "faqHintsA": "A hint points you toward an item you haven't found yet. You can unlock {daily} a day by watching a short video, and hold up to {active} unsolved hints at once,  each one clears when you discover the item it points to.",
+  "@faqHintsA": {
+    "placeholders": {
+      "daily": { "type": "int" },
+      "active": { "type": "int" }
+    }
+  },
+
+  "faqSaveQ": "Is my progress saved?",
+  "faqSaveA": "Yes,  automatically, on this device, after every discovery. Sign in from Settings to back it up to your account and carry it to another device.",
+
+  "faqResetQ": "Can I start over?",
+  "faqResetA": "Yes. Settings › Progress › Reset clears every discovery and returns you to the four starting elements. It cannot be undone.",
+
+  "faqLearnMoreQ": "Can I read more about an item?",
+  "faqLearnMoreA": "Open any item you've discovered and use Read More for an article about it, or Watch a Video to search for it on YouTube.",
+
+  "faqOfflineQ": "Does it work offline?",
+  "faqOfflineA": "Yes. The whole game is on your device,  only signing in, syncing to your account and videos need a connection.",
+
+  "faqLanguageQ": "Can I change the language?",
+  "faqLanguageA": "Not yet. MixRun is in English for now, with more languages planned."
+}

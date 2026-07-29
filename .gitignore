@@ -1,0 +1,100 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+/coverage/
+# Nested build-output dirs (Gradle module output, generated l10n cache)
+/android/build/
+/lib/l10n/build/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+*.md
+!README.md
+!items_design.md
+Screens/
+svgs/
+pngs/
+
+# ---------------------------------------------------------------------------
+# Secrets and machine-local config,  never commit these.
+# ---------------------------------------------------------------------------
+
+# Firebase config: contains the project's API key, OAuth client ids and the
+# signing certificate hash. Copy google-services.example.json over it and fill
+# in your own project's values (see README).
+android/app/google-services.json
+
+# Names the Firebase project the CLI deploys to. firebase.json (which only says
+# where the rules file lives) stays committed.
+.firebaserc
+ios/Runner/GoogleService-Info.plist
+macos/Runner/GoogleService-Info.plist
+lib/firebase_options.dart
+
+# Local SDK paths, and the AdMob app id read by android/app/build.gradle.kts.
+android/local.properties
+**/local.properties
+.gradle/
+android/.gradle/
+
+# Release signing material. A leaked keystore lets anyone ship an update
+# impersonating this app.
+*.jks
+*.keystore
+key.properties
+android/key.properties
+
+# Generic credential files
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+*.p8
+service-account*.json
+!google-services.example.json
+
+# Curated game data kept out of version control. Build from the committed
+# templates: copy the *.example.dart files over these names (see README).
+# /lib/data/game_data.dart
+# /lib/data/game_levels.dart
+# /lib/data/element_icons.dart
