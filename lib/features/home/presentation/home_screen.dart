@@ -1,15 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 import '../../../core/router/app_router.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_typography.dart';
 import 'package:mixrun/l10n/gen/app_localizations.dart';
+import '../../../data/app_update_repository.dart';
 import '../../shared/widgets/gold_button.dart';
+import '../../shared/widgets/update_dialog.dart';
 
 /// The landing screen: branding and a single call to action.
-class HomeScreen extends StatelessWidget {
+///
+/// Also where a new release announces itself: this is the first screen after the
+/// splash, so the check runs here rather than blocking startup.
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // After the first frame, so the branding is on screen before anything is
+    // laid over it.
+    WidgetsBinding.instance.addPostFrameCallback((_) => _checkForUpdate());
+  }
+
+  /// Prompts if a newer APK has been published. Runs once per launch, not on
+  /// every return to the home screen.
+  Future<void> _checkForUpdate() async {
+    final AppUpdateRepository updates = context.read<AppUpdateRepository>();
+    if (updates.checkedThisSession) return;
+    final UpdateStatus status = await updates.check();
+    if (!mounted || !status.shouldPrompt) return;
+    await showUpdatePrompt(context, status, repository: updates);
+  }
 
   @override
   Widget build(BuildContext context) {

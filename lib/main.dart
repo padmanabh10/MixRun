@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'app.dart';
+import 'data/app_update_repository.dart';
 import 'data/audio_service.dart';
 import 'data/auth_service.dart';
 import 'data/cloud_progress_repository.dart';
@@ -79,6 +80,13 @@ Future<void> main() async {
     }));
   }
 
+  // MixRun is side-loaded rather than installed from a store, so nothing tells
+  // a player a new APK exists. The home screen asks this repository once per
+  // launch and prompts when a newer build has been published.
+  final AppUpdateRepository updates = await AppUpdateRepository.create(
+    db: firebaseReady ? FirebaseFirestore.instance : null,
+  );
+
   // Drive the looping background music and the sound-effects gate off the
   // player's audio toggles. The calls are idempotent, so reacting to every
   // controller change is harmless.
@@ -104,5 +112,6 @@ Future<void> main() async {
     account: account,
     rewardedAds: rewardedAds,
     audio: audio,
+    updates: updates,
   ));
 }

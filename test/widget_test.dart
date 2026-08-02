@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:mixrun/app.dart';
 import 'package:mixrun/core/router/app_router.dart';
+import 'package:mixrun/data/app_update_repository.dart';
 import 'package:mixrun/data/audio_service.dart';
 import 'package:mixrun/data/progress_repository.dart';
 import 'package:mixrun/data/rewarded_ad_service.dart';
@@ -17,6 +18,13 @@ import 'package:mixrun/domain/game_controller.dart';
 const Map<String, Object> _returningPlayer = <String, Object>{
   'mixrun.introSeen': true,
 };
+
+/// An update repository with no Firestore behind it and nothing cached, so the
+/// check finds no release and no prompt covers the screens under test.
+Future<AppUpdateRepository> _offlineUpdates() async => AppUpdateRepository(
+      prefs: await SharedPreferences.getInstance(),
+      currentVersionCode: 1,
+    );
 
 void main() {
   testWidgets('home screen shows only branding and the play button',
@@ -38,6 +46,7 @@ void main() {
         // The tests never open the Hints screen, so the ad service stays idle.
         rewardedAds: RewardedAdService(),
         audio: AudioService(),
+        updates: await _offlineUpdates(),
       ),
     );
     // Advance past the splash screen's hold before it routes to home.
@@ -69,6 +78,7 @@ void main() {
         // The tests never open the Hints screen, so the ad service stays idle.
         rewardedAds: RewardedAdService(),
         audio: AudioService(),
+        updates: await _offlineUpdates(),
       ),
     );
     await tester.pump(const Duration(seconds: 3));
@@ -115,6 +125,7 @@ void main() {
         account: AccountController(game: game, available: false),
         rewardedAds: RewardedAdService(),
         audio: AudioService(),
+        updates: await _offlineUpdates(),
       ),
     );
     await tester.pump(const Duration(seconds: 3));
@@ -172,6 +183,7 @@ void main() {
         account: AccountController(game: game, available: false),
         rewardedAds: RewardedAdService(),
         audio: AudioService(),
+        updates: await _offlineUpdates(),
       ),
     );
     await tester.pump(const Duration(seconds: 3));

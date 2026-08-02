@@ -515,4 +515,30 @@ class AppLocalizationsPa extends AppLocalizations {
   @override
   String get faqLanguageA =>
       'Not yet. MixRun is in English for now, with more languages planned.';
+
+  @override
+  String get updateTitle => 'Update available';
+
+  @override
+  String updateBody(String version) {
+    return 'MixRun $version is ready. Download it to get the newest items and fixes.';
+  }
+
+  @override
+  String get updateRequiredTitle => 'Update required';
+
+  @override
+  String updateRequiredBody(String version) {
+    return 'This version of MixRun is no longer supported. Download $version to keep playing.';
+  }
+
+  @override
+  String get updateNow => 'Update now';
+
+  @override
+  String get updateLater => 'Later';
+
+  @override
+  String get updateFailed =>
+      'Couldn\'t open the download. Check your connection and try again.';
 }

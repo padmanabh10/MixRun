@@ -78,6 +78,7 @@ a clone builds and runs without them.
 | `android/local.properties`           | `admob.appId=ca-app-pub-XXX~YYY`              |
 | Rewarded ad unit                     | `--dart-define=ADMOB_REWARDED_AD_UNIT_ID=...` |
 | Test device ids                      | `--dart-define=ADMOB_TEST_DEVICE_IDS=HASH1,HASH2` |
+| `android/key.properties` + the `.jks` | release signing, see below                   |
 
 **Firebase.** Without `google-services.json` the app runs fully offline with
 account features disabled,  `main.dart` catches the init failure, and
@@ -113,10 +114,38 @@ passed at build time and never committed:
 flutter run --dart-define=ADMOB_TEST_DEVICE_IDS=33BE2250B43518CCDA7DE426D04EE231
 ```
 
-**Release signing.** The release build currently signs with the debug keys (see
-the TODO in `android/app/build.gradle.kts`). When you add a real keystore, keep
-it out of git,  `*.jks`, `*.keystore` and `key.properties` are already ignored.
-A leaked keystore lets anyone publish an update impersonating this app.
+**Release signing.** Release builds are signed with the keystore described by
+`android/key.properties` (gitignored):
+
+```properties
+storePassword=...
+keyPassword=...
+keyAlias=mixrun
+storeFile=C:/Users/you/keystores/mixrun-release.jks
+```
+
+Without that file the build falls back to the debug key and logs a warning.
+Such an APK still runs, so a fresh clone builds — but **never distribute one**:
+the debug key is generated per machine, so the next machine produces an APK
+Android refuses to install over it.
+
+That last point is why this keystore matters more here than in a store-published
+app. Android only installs an update signed with the *same* key as the installed
+build, and MixRun updates itself in place. **Back up the `.jks` and its
+password.** Lose either and no installed copy can ever be updated again — every
+player would have to uninstall (losing local progress) and start over. A leaked
+keystore is the mirror risk: it lets anyone ship an update impersonating this app.
+
+Generating one, if you're setting up from scratch:
+
+```sh
+keytool -genkeypair -v -keystore ~/keystores/mixrun-release.jks \
+  -keyalg RSA -keysize 2048 -validity 10000 -alias mixrun
+```
+
+Keep it outside the repo. If the app uses Google Sign-In, add the new
+certificate's SHA-1 to the Firebase console (Project settings → Your apps) and
+re-download `google-services.json`, or sign-in fails in release builds.
 
 ## Fixing a broken "learn more" link
 
@@ -148,6 +177,78 @@ Clients apply the cached copy before the first frame and refresh in the
 background at most every 12 hours, so corrections reach players on their next
 launch or two. Every failure path (no Firebase, offline, permission denied, a
 malformed document) falls back to the link baked into the app.
+
+## Releasing a new version
+
+MixRun is side-loaded as an APK rather than installed from a store, so nothing
+tells a player a new build exists. One Firestore document does: on launch the
+home screen compares the running build against **`config/app_version`** and
+prompts to download when it is behind (see
+`lib/data/app_update_repository.dart`).
+
+To ship a release:
+
+1. **Bump the version** in `pubspec.yaml` — both parts, e.g.
+   `version: 1.1.0+2`. The number after `+` is the build number
+   (Android's `versionCode`) and is the *only* thing compared; version *names*
+   are never compared, because `1.10.0` sorts before `1.9.0` as a string.
+2. **Build and upload the APK.**
+
+   ```sh
+   flutter build apk --release
+   ```
+
+   Upload `build/app/outputs/flutter-apk/app-release.apk` somewhere with a
+   stable public URL — Firebase Storage, GitHub Releases, any static host.
+   Use a versioned filename so an old link never serves the new build.
+3. **Publish the release.** `tools/publish_release.py` reads the version from
+   `pubspec.yaml`, refuses a `downloadUrl` it can't fetch, and writes the
+   document with the Admin SDK (needs `pip install firebase-admin` and a service
+   account key in `GOOGLE_APPLICATION_CREDENTIALS`):
+
+   ```sh
+   python tools/publish_release.py --url https://.../mixrun-1.1.0.apk \
+       --notes "New Heroes level\nFaster canvas"
+   ```
+
+   Or edit `config/app_version` in the Firebase console by hand — one field
+   named `android` of type *map*, holding:
+
+   ```json
+   {
+     "android": {
+       "versionCode": 2,
+       "versionName": "1.1.0",
+       "minVersionCode": 1,
+       "downloadUrl": "https://example.com/mixrun-1.1.0.apk",
+       "notes": "New Heroes level and a faster canvas."
+     }
+   }
+   ```
+
+   - `versionCode` — build number of the new APK. Players below it are offered
+     the update.
+   - `minVersionCode` — oldest build still supported. Players below it are
+     *forced*: the prompt cannot be dismissed. Leave it alone for an ordinary
+     release; raise it only when an old build is genuinely broken (say, a
+     Firestore schema it can't read).
+   - `downloadUrl` — opened in the browser, which hands the file to Android's
+     download manager. That needs no extra permission from the app; the player
+     taps the finished download to install.
+   - `notes` — optional "what's new" blurb shown in the prompt.
+4. **Deploy the rules** once, if you haven't:
+   `firebase deploy --only firestore:rules`. The document is world-readable
+   (most players never sign in) and writable by no client — a client able to
+   change `downloadUrl` could point players at an APK we didn't build.
+
+Players see the prompt on their next launch. "Later" silences an optional
+update for 3 days, or until a newer `versionCode` is published. The check runs
+at most once every 6 hours and the last result is cached, so a *required*
+update still blocks even if the device is offline afterwards. Every failure
+path (no Firebase, offline, a malformed document) simply shows no prompt.
+
+To test the flow before releasing, publish a `versionCode` above the one you're
+running and launch the app.
 
 ## Building & running
 

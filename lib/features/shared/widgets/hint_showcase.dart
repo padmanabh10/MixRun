@@ -61,97 +61,115 @@ class _HintShowcase extends StatelessWidget {
             stops: <double>[0, 0.85],
           ),
         ),
-        child: SafeArea(
-          child: Stack(
-            alignment: Alignment.center,
-            children: <Widget>[
-              ShowcaseGlow(size: tileSize * 1.7),
-              // Center the tile/text, but let it scroll if a short (landscape)
-              // viewport can't fit it rather than overflowing.
-              Positioned.fill(
-                child: LayoutBuilder(
-                  builder: (context, constraints) => SingleChildScrollView(
-                    child: ConstrainedBox(
-                      constraints:
-                          BoxConstraints(minHeight: constraints.maxHeight),
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
-                        child: Center(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  const Icon(Icons.lightbulb_rounded,
-                                      size: 16, color: AppColors.gold),
-                                  const SizedBox(width: 8),
-                                  Text(
-                                    strings.hint,
-                                    style: AppText.display(
-                                      size: 14,
-                                      weight: FontWeight.w800,
+        // The route has no Scaffold, so a transparent Material supplies the
+        // default text style; without it every Text falls back to the debug
+        // style and picks up a yellow underline.
+        child: Material(
+          type: MaterialType.transparency,
+          child: SafeArea(
+            child: Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                ShowcaseGlow(size: tileSize * 1.7),
+                // Center the tile/text, but let it scroll if a short (landscape)
+                // viewport can't fit it rather than overflowing.
+                Positioned.fill(
+                  child: LayoutBuilder(
+                    builder: (context, constraints) => SingleChildScrollView(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minHeight: constraints.maxHeight,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 32,
+                            vertical: 24,
+                          ),
+                          child: Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    const Icon(
+                                      Icons.lightbulb_rounded,
+                                      size: 16,
                                       color: AppColors.gold,
-                                      letterSpacing: 3,
                                     ),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      strings.hint,
+                                      style: AppText.display(
+                                        size: 14,
+                                        weight: FontWeight.w800,
+                                        color: AppColors.gold,
+                                        letterSpacing: 3,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    const Icon(
+                                      Icons.lightbulb_rounded,
+                                      size: 16,
+                                      color: AppColors.gold,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: tileSize * 0.12),
+                                _MysteryTile(size: tileSize),
+                                SizedBox(height: tileSize * 0.12),
+                                Text(
+                                  controller.elementName(elementId),
+                                  textAlign: TextAlign.center,
+                                  style: AppText.display(
+                                    size: 34,
+                                    weight: FontWeight.w800,
+                                    color: AppColors.cocoa,
+                                    height: 1,
                                   ),
-                                  const SizedBox(width: 8),
-                                  const Icon(Icons.lightbulb_rounded,
-                                      size: 16, color: AppColors.gold),
-                                ],
-                              ),
-                              SizedBox(height: tileSize * 0.12),
-                              _MysteryTile(size: tileSize),
-                              SizedBox(height: tileSize * 0.12),
-                              Text(
-                                controller.elementName(elementId),
-                                textAlign: TextAlign.center,
-                                style: AppText.display(
-                                  size: 34,
-                                  weight: FontWeight.w800,
-                                  color: AppColors.cocoa,
-                                  height: 1,
                                 ),
-                              ),
-                              const SizedBox(height: 14),
-                              Text(
-                                strings.figureOutRecipe,
-                                textAlign: TextAlign.center,
-                                style: AppText.body(
-                                  size: 14,
-                                  color: AppColors.cocoaSoft,
-                                  height: 1.5,
+                                const SizedBox(height: 14),
+                                Text(
+                                  strings.figureOutRecipe,
+                                  textAlign: TextAlign.center,
+                                  style: AppText.body(
+                                    size: 14,
+                                    color: AppColors.cocoaSoft,
+                                    height: 1.5,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Positioned(
-                bottom: 28,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    const Icon(Icons.touch_app_rounded,
-                        size: 16, color: AppColors.mutedBrown),
-                    const SizedBox(width: 7),
-                    Text(
-                      strings.close,
-                      style: AppText.body(
-                        size: 13,
-                        weight: FontWeight.w600,
+                Positioned(
+                  bottom: 28,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      const Icon(
+                        Icons.touch_app_rounded,
+                        size: 16,
                         color: AppColors.mutedBrown,
                       ),
-                    ),
-                  ],
+                      const SizedBox(width: 7),
+                      Text(
+                        strings.close,
+                        style: AppText.body(
+                          size: 13,
+                          weight: FontWeight.w600,
+                          color: AppColors.mutedBrown,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

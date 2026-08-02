@@ -25,6 +25,21 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    // The newest published build, per platform (see AppUpdateRepository).
+    //
+    // World-readable for the same reason as the links above: MixRun is
+    // side-loaded, so this document is the only way an installed copy learns a
+    // new APK exists, and most players never sign in. It holds nothing
+    // sensitive — a build number and a public download URL.
+    //
+    // Writes are denied to every client: a client able to change the download
+    // URL could point players at an APK we didn't build. Edit it in the
+    // Firebase console, or from a trusted context using the Admin SDK.
+    match /config/app_version {
+      allow read: if true;
+      allow write: if false;
+    }
+
     // Everything else is closed.
     match /{document=**} {
       allow read, write: if false;

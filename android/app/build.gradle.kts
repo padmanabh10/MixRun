@@ -33,6 +33,21 @@ val admobAppId: String = run {
         ?: "ca-app-pub-3940256099942544~3347511713"
 }
 
+// Release signing material, kept out of source control in android/key.properties
+// (see README). MixRun is side-loaded and updates itself in place, and Android
+// refuses to install an update signed with a different key than the installed
+// build — so this keystore must outlive every release. Back it up; losing it
+// means no installed copy can ever be updated again.
+//
+// Absent, the release build falls back to the debug key so a fresh clone still
+// builds. Such a build must never be distributed: the debug key is generated
+// per machine, so the next machine produces un-installable updates.
+val keystoreProperties: Properties? = run {
+    val file = rootProject.file("key.properties")
+    if (!file.exists()) return@run null
+    Properties().apply { file.inputStream().use { load(it) } }
+}
+
 android {
     namespace = "com.mixrun.mixrun"
     compileSdk = flutter.compileSdkVersion
@@ -60,11 +75,27 @@ android {
         manifestPlaceholders["admobAppId"] = admobAppId
     }
 
+    signingConfigs {
+        if (keystoreProperties != null) {
+            create("release") {
+                storeFile = file(keystoreProperties["storeFile"] as String)
+                storePassword = keystoreProperties["storePassword"] as String
+                keyAlias = keystoreProperties["keyAlias"] as String
+                keyPassword = keystoreProperties["keyPassword"] as String
+            }
+        }
+    }
+
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = if (keystoreProperties != null) {
+                signingConfigs.getByName("release")
+            } else {
+                // No keystore on this machine: sign with the debug key so the
+                // build still succeeds. Do not ship the resulting APK.
+                logger.warn("key.properties not found — signing release with the DEBUG key. Do not distribute this APK.")
+                signingConfigs.getByName("debug")
+            }
         }
     }
 }

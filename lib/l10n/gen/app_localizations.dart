@@ -1019,6 +1019,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Not yet. MixRun is in English for now, with more languages planned.'**
   String get faqLanguageA;
+
+  /// No description provided for @updateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update available'**
+  String get updateTitle;
+
+  /// No description provided for @updateBody.
+  ///
+  /// In en, this message translates to:
+  /// **'MixRun {version} is ready. Download it to get the newest items and fixes.'**
+  String updateBody(String version);
+
+  /// No description provided for @updateRequiredTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update required'**
+  String get updateRequiredTitle;
+
+  /// No description provided for @updateRequiredBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This version of MixRun is no longer supported. Download {version} to keep playing.'**
+  String updateRequiredBody(String version);
+
+  /// No description provided for @updateNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Update now'**
+  String get updateNow;
+
+  /// No description provided for @updateLater.
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get updateLater;
+
+  /// No description provided for @updateFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t open the download. Check your connection and try again.'**
+  String get updateFailed;
 }
 
 class _AppLocalizationsDelegate

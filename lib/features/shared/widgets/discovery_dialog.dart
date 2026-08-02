@@ -90,90 +90,106 @@ class _DiscoveryShowcaseState extends State<_DiscoveryShowcase> {
             stops: <double>[0, 0.85],
           ),
         ),
-        child: SafeArea(
-          child: Stack(
-            alignment: Alignment.center,
-            children: <Widget>[
-              // A slow celebratory glow behind the artwork.
-              ShowcaseGlow(size: imageSize * 1.7),
-              // Center the artwork/text, but let it scroll if a short (landscape)
-              // viewport can't fit it rather than overflowing.
-              Positioned.fill(
-                child: LayoutBuilder(
-                  builder: (context, constraints) => SingleChildScrollView(
-                    child: ConstrainedBox(
-                      constraints:
-                          BoxConstraints(minHeight: constraints.maxHeight),
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
-                        child: Center(
-                          // Cross-fade between elements when advancing a batch.
-                          child: AnimatedSwitcher(
-                            duration: const Duration(milliseconds: 280),
-                            child: Column(
-                              key: ValueKey<String>(id),
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    const Icon(Icons.auto_awesome,
-                                        size: 15, color: AppColors.orange),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      strings.newDiscovery,
-                                      style: AppText.display(
-                                        size: 14,
-                                        weight: FontWeight.w800,
+        // The route has no Scaffold, so a transparent Material supplies the
+        // default text style; without it every Text falls back to the debug
+        // style and picks up a yellow underline.
+        child: Material(
+          type: MaterialType.transparency,
+          child: SafeArea(
+            child: Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                // A slow celebratory glow behind the artwork.
+                ShowcaseGlow(size: imageSize * 1.7),
+                // Center the artwork/text, but let it scroll if a short (landscape)
+                // viewport can't fit it rather than overflowing.
+                Positioned.fill(
+                  child: LayoutBuilder(
+                    builder: (context, constraints) => SingleChildScrollView(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minHeight: constraints.maxHeight,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 32,
+                            vertical: 24,
+                          ),
+                          child: Center(
+                            // Cross-fade between elements when advancing a batch.
+                            child: AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 280),
+                              child: Column(
+                                key: ValueKey<String>(id),
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      const Icon(
+                                        Icons.auto_awesome,
+                                        size: 15,
                                         color: AppColors.orange,
-                                        letterSpacing: 3,
                                       ),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        strings.newDiscovery,
+                                        style: AppText.display(
+                                          size: 14,
+                                          weight: FontWeight.w800,
+                                          color: AppColors.orange,
+                                          letterSpacing: 3,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      const Icon(
+                                        Icons.auto_awesome,
+                                        size: 15,
+                                        color: AppColors.orange,
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: imageSize * 0.12),
+                                  IconTile(
+                                    elementId: id,
+                                    size: imageSize,
+                                    radius: imageSize * 0.22,
+                                    padding: imageSize * 0.16,
+                                    gradientTop: Colors.white,
+                                    gradientBottom: AppColors.tileBottom,
+                                  ),
+                                  SizedBox(height: imageSize * 0.12),
+                                  Text(
+                                    controller.elementName(id),
+                                    textAlign: TextAlign.center,
+                                    style: AppText.display(
+                                      size: 34,
+                                      weight: FontWeight.w800,
+                                      color: AppColors.cocoa,
+                                      height: 1,
                                     ),
-                                    const SizedBox(width: 8),
-                                    const Icon(Icons.auto_awesome,
-                                        size: 15, color: AppColors.orange),
-                                  ],
-                                ),
-                                SizedBox(height: imageSize * 0.12),
-                                IconTile(
-                                  elementId: id,
-                                  size: imageSize,
-                                  radius: imageSize * 0.22,
-                                  padding: imageSize * 0.16,
-                                  gradientTop: Colors.white,
-                                  gradientBottom: AppColors.tileBottom,
-                                ),
-                                SizedBox(height: imageSize * 0.12),
-                                Text(
-                                  controller.elementName(id),
-                                  textAlign: TextAlign.center,
-                                  style: AppText.display(
-                                    size: 34,
-                                    weight: FontWeight.w800,
-                                    color: AppColors.cocoa,
-                                    height: 1,
                                   ),
-                                ),
-                                const SizedBox(height: 14),
-                                Text(
-                                  controller.elementDescription(id),
-                                  textAlign: TextAlign.center,
-                                  style: AppText.body(
-                                    size: 14,
-                                    color: AppColors.cocoaSoft,
-                                    height: 1.5,
+                                  const SizedBox(height: 14),
+                                  Text(
+                                    controller.elementDescription(id),
+                                    textAlign: TextAlign.center,
+                                    style: AppText.body(
+                                      size: 14,
+                                      color: AppColors.cocoaSoft,
+                                      height: 1.5,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(height: 22),
-                                ConstrainedBox(
-                                  constraints:
-                                      const BoxConstraints(maxWidth: 380),
-                                  child: LearnMoreActions(
-                                    element: GameData.element(id),
+                                  const SizedBox(height: 22),
+                                  ConstrainedBox(
+                                    constraints: const BoxConstraints(
+                                      maxWidth: 380,
+                                    ),
+                                    child: LearnMoreActions(
+                                      element: GameData.element(id),
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -181,32 +197,34 @@ class _DiscoveryShowcaseState extends State<_DiscoveryShowcase> {
                     ),
                   ),
                 ),
-              ),
-              // The tap-anywhere affordance.
-              Positioned(
-                bottom: 28,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    const Icon(Icons.touch_app_rounded,
-                        size: 16, color: AppColors.mutedBrown),
-                    const SizedBox(width: 7),
-                    Text(
-                      hasMore ? strings.continueLabel : strings.close,
-                      style: AppText.body(
-                        size: 13,
-                        weight: FontWeight.w600,
+                // The tap-anywhere affordance.
+                Positioned(
+                  bottom: 28,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      const Icon(
+                        Icons.touch_app_rounded,
+                        size: 16,
                         color: AppColors.mutedBrown,
                       ),
-                    ),
-                  ],
+                      const SizedBox(width: 7),
+                      Text(
+                        hasMore ? strings.continueLabel : strings.close,
+                        style: AppText.body(
+                          size: 13,
+                          weight: FontWeight.w600,
+                          color: AppColors.mutedBrown,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
-
